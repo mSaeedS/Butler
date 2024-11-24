@@ -1,32 +1,26 @@
-import cv2
 import torch
+import cv2
 
-# ESP32-CAM stream URL
-stream_url = "http://192.168.18.103:81/stream"
-cap = cv2.VideoCapture(stream_url)
+# Load the model from PyTorch Hub
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
 
-if not cap.isOpened():
-    print("Error: Could not open video stream.")
-    exit()
-
-# Load YOLOv5 model
-model = torch.hub.load('ultralytics/yolov5', 'yolov5s')  # Use 'yolov5m', 'yolov5l', or 'yolov5x' for larger models
+# Load video or image
+cap = cv2.VideoCapture(0)  # Or use path to your video or stream URL
 
 while True:
     ret, frame = cap.read()
     if not ret:
         break
 
-    # Perform detection
+    # Inference
     results = model(frame)
 
-    # Render results on the frame
-    results.render()
+    # Render results
+    frame = results.render()[0]
 
-    # Display the frame with detections
-    cv2.imshow("YOLOv5 Detection", frame)
+    # Show the frame
+    cv2.imshow('YOLOv5 Inference', frame)
 
-    # Exit on 'q' key press
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
