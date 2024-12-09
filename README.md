@@ -3,7 +3,7 @@
 -Grid Setup
 -Returning State Vectors
 
-# Training and Setup
+
 Install Dependencies:
 pip install torch torchvision
 pip install opencv-python
@@ -50,41 +50,3 @@ python train.py --img 640 --batch 16 --epochs 50 --data data.yaml --weights yolo
 python detect.py --weights runs/train/ball_model/weights/best.pt --img 640 --source image.jpg
 
 
-# Running # 
-
-1. pip install torch torchvision opencv-python
-
-2. git clone https://github.com/ultralytics/yolov5.git
-   cd yolov5
-
-3. 
-
-import cv2
-import torch
-
-#Load the trained YOLOv5 model
-model = torch.hub.load('ultralytics/yolov5', 'custom', path='runs/train/exp/weights/best.pt')
-
-
-cap = cv2.VideoCapture(1)  
-
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        break
-
-    # Perform object detection
-    results = model(frame)
-
-    # Render results on the frame
-    frame = results.render()[0]
-
-    # Display the frame with detection
-    cv2.imshow('YOLOv5 Detection', frame)
-
-    # Break the loop on 'q' key press
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
