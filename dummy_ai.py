@@ -15,11 +15,11 @@ def send_random_data():
 
     while True:
         data = {
-            "source": "extra_sender",
+            "source": "dummy_ai",
             "action": (random.randint(0, 640), random.randint(0, 480)),
         }
         socket.send_json(data)
-        print("[Extra Sender] Sent random data:", data)
+        print("[dummy_ai] Sent random data:", data)
         time.sleep(1)
 
 # Function to receive forwarded data from receiver (port 5557)
@@ -30,7 +30,7 @@ def receive_from_receiver():
 
     while True:
         data = socket.recv_json()
-        print("[Extra Sender] Received forwarded data:", data)
+        print("[dummy_ai] Received forwarded data:", data)
         
 # Run both functions in separate threads
 thread1 = threading.Thread(target=send_random_data, daemon=True)

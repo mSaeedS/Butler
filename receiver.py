@@ -21,23 +21,23 @@ def receive_from_object_detection():
 
         # Forward data to extra sender
         sender_socket.send_json(data)
-        print("[Receiver] Forwarded to Extra Sender")
+        print("[Receiver] Forwarded to dummy_ai")
 
 # Function to receive data from extra sender (port 5556)
-def receive_from_extra_sender():
+def receive_from_dummy_ai():
     socket = context.socket(zmq.SUB)
     socket.connect("tcp://localhost:5556")
     socket.setsockopt(zmq.SUBSCRIBE, b'')
 
     while True:
         data = socket.recv_json()
-        print("[Extra Sender] Received:", data)
+        print("[dummy_ai] Received:", data)
         hexapod_socket.send_json(data)
-        print("[Receiver] Forwarded to Hexapod")
+        print("[dummy_ai] Forwarded to Hexapod")
         
 # Start both receiver threads
 thread1 = threading.Thread(target=receive_from_object_detection, daemon=True)
-thread2 = threading.Thread(target=receive_from_extra_sender, daemon=True)
+thread2 = threading.Thread(target=receive_from_dummy_ai, daemon=True)
 
 thread1.start()
 thread2.start()
