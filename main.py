@@ -2,7 +2,7 @@ import torch
 import cv2
 import zmq
 import json
-
+import time
 # Load the model from PyTorch Hub
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='latest.pt')
 
@@ -95,7 +95,8 @@ while True:
     
     # Send data even if no objects detected
     send_data(ball, hexapod, goal, xd)
-
+    #send_data(0,1,2,3)
+    #time.sleep(1)
     # Render results
     frame = results.render()[0]
 
