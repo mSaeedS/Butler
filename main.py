@@ -17,7 +17,7 @@ def get_coordinates(event, x, y, flags, param):
         print(f"Pixel coordinates: x={x}, y={y}")
 
 # Load video or image
-cap = cv2.VideoCapture(0)  # Or use path to your video or stream URL
+cap = cv2.VideoCapture(1)  # Or use path to your video or stream URL
 
 # Create a named window for the YOLOv5 output and set the mouse callback
 cv2.namedWindow("YOLOv5 Inference")
